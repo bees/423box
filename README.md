@@ -1,2 +1,3 @@
 # 423box
-vagrant config for 423
+vagrant config for 423. Derived from hashicorp/atlas-packer-vagrant-tutorial
+

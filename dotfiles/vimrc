@@ -1,0 +1,38 @@
+set number
+set formatoptions=cro
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set hlsearch
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/vim-easy-align'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'majutsushi/tagbar'
+Plug 'kien/ctrlp.vim'
+Plug 'AlessandroYorba/Sierra'
+Plug 'tpope/vim-fugitive'
+
+call plug#end()
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "*",
+    \ "Staged"    : "+",
+    \ "Untracked" : "u",
+    \ "Renamed"   : "r",
+    \ "Unmerged"  : "~",
+    \ "Deleted"   : "x",
+    \ "Dirty"     : "d",
+    \ "Clean"     : "c",
+    \ "Unknown"   : "?"
+    \ }
+
+let g:sierra_Midnight = 1
+colo sierra
+
+let mapleader=" "
+nmap <F8> :TagbarToggle<CR>
+noremap <leader>b  :TagbarToggle<CR>
+set tags=./tags;,tags;,.tags;

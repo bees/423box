@@ -11,7 +11,10 @@ apt-get -y install curl
 apt-get install -y git cscope exuberant-ctags curl tmux vim
 
 ## Setup headers
-apt-get install -y linux-headers-3.19.0-25-generic linux-image-3.19.0-25-generic
+
+## Boot using 3.19.0-25 kernel (yes 'sudo su' is dumb)
+sed -i 's/GRUB_DEFAULT=0/GRUB_DEFAULT=\"1>2\"/' /etc/default/grub
+update-grub
 
 ## Get ctags
 su vagrant -c "mkdir -p ~/.cscope"
@@ -26,7 +29,8 @@ find $LSRC -path "$LSRC/arch/*" ! -path "$LSRC/arch/i386*" -prune -o        \
     -path "$LSRC/drivers*" -prune -o                                        \
     -name "*.[chxsS]" -print > /home/vagrant/.cscope/cscope.files
 
-su vagrant -c "cd ~/.cscope && cscope -b -q" # && ctags -L cscope.files && mv tags ../.tags"
+su vagrant -c "cd ~/.cscope && cscope -b -q -k"
+su vagrant -c "ctags -L /home/vagrant/.cscope/cscope.files -f /home/vagrant/.tags"
 
 ## Fix some display issues with tmux
 su vagrant -c "echo \"export TERM=\"screen-256color\"\" >> ~/.bashrc" # fix for weird tmux colors
@@ -39,3 +43,4 @@ su vagrant -c "curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
 su vagrant -c "curl -s http://ix.io/oFn -o ~/.vimrc"
 
 su vagrant -c "vim +PlugInstall +qa > /dev/null"
+

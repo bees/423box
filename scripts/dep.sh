@@ -10,12 +10,6 @@ apt-get -y install curl
 
 apt-get install -y git cscope exuberant-ctags curl tmux vim
 
-## Setup headers
-
-## Boot using 3.19.0-25 kernel (yes 'sudo su' is dumb)
-sed -i 's/GRUB_DEFAULT=0/GRUB_DEFAULT=\"1>2\"/' /etc/default/grub
-update-grub
-
 ## Get ctags
 su vagrant -c "mkdir -p ~/.cscope"
 
@@ -37,10 +31,12 @@ su vagrant -c "echo \"export TERM=\"screen-256color\"\" >> ~/.bashrc" # fix for 
 su vagrant -c "echo \"alias tmux='tmux -2'\" >> ~/.bashrc" # fix for weird tmux colors
 
 ## Setup vim
+su vagrant -c "curl -sfLo ~/.vimrc \
+    https://raw.githubusercontent.com/bees/423box/master/dotfiles/vimrc"
+
 su vagrant -c "curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
-su vagrant -c "curl -s http://ix.io/oFn -o ~/.vimrc"
 
 su vagrant -c "vim +PlugInstall +qa > /dev/null"
 
